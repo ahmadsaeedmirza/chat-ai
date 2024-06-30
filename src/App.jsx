@@ -9,6 +9,8 @@ function App() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
 
+  const apiKey = import.meta.env.VITE_API_KEY;
+
   const handleChange = (event) => {
     setQuestion(event.target.value);
   };
@@ -22,9 +24,9 @@ function App() {
 
   async function GenerateAnswer (question) {
     setAnswer("loading...");
-    console.log("Key:", process.env.API_KEY);
+    console.log(import.meta.env.VITE_API_KEY);
     const response = await axios({
-      url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.REACT_APP_API_KEY}",
+      url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${import.meta.env.VITE_API_KEY}`,
       method: "post",
       data: {
         contents: [
@@ -32,9 +34,26 @@ function App() {
         ],
       },
     });
-    console.log("Key:", process.env.API_KEY);
     setAnswer(response["data"]["candidates"][0]["content"]["parts"][0]["text"]);
   } 
+
+//   async function GenerateAnswer(question) {
+//     setAnswer("loading...");
+//     console.log(import.meta.env.VITE_API_KEY);
+//     try {
+//         const response = await axios.post(
+//             `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyCR3Tg1KvIj-8bRFEGXuMruCim6hCX4LQE`,
+//             {
+//                 prompt: question // Modify this to match the API's expected structure
+//             }
+//         );
+//         setAnswer(response.data.candidates[0].content.parts[0].text); // Adjust based on the actual response
+//     } catch (error) {
+//         console.error("Error:", error);
+//         setAnswer("Error generating answer.");
+//     }
+// }
+
 
   const handleClick = () => {
     GenerateAnswer(question);
