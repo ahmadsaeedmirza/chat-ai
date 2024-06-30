@@ -22,8 +22,9 @@ function App() {
 
   async function GenerateAnswer (question) {
     setAnswer("loading...");
+    console.log("Key:", process.env.API_KEY);
     const response = await axios({
-      url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyChk9rAkt-PN92NM3-AGQPeblDnCp9GtVk",
+      url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.REACT_APP_API_KEY}",
       method: "post",
       data: {
         contents: [
@@ -31,6 +32,7 @@ function App() {
         ],
       },
     });
+    console.log("Key:", process.env.API_KEY);
     setAnswer(response["data"]["candidates"][0]["content"]["parts"][0]["text"]);
   } 
 
