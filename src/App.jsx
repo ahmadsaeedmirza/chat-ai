@@ -24,7 +24,6 @@ function App() {
 
   async function GenerateAnswer (question) {
     setAnswer("loading...");
-    console.log(import.meta.env.VITE_API_KEY);
     const response = await axios({
       url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${import.meta.env.VITE_API_KEY}`,
       method: "post",
